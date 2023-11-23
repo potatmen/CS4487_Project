@@ -5,6 +5,10 @@ from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 from Dataset import Dataset
 from models import Models
+import time
+
+start_time = time.time()
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -17,7 +21,6 @@ model_choice = 'resnet50'
 num_classes = 2  
 dropout = 0  
 model = Models(model_choice, num_out_classes=num_classes, dropout=dropout)
-
 
 model.to(device)
 model.eval()
@@ -51,5 +54,9 @@ with torch.no_grad():
 average_loss = test_loss / len(test_dataloader)
 accuracy = correct / total * 100
 
+end_time = time.time()
+execution_time = end_time - start_time
+
 print(f"Average Loss: {average_loss:.4f}")
 print(f"Accuracy: {accuracy:.2f}%")
+print(f"Time to execute: {execution_time} seconds")
