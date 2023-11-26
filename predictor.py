@@ -38,7 +38,7 @@ class Predictor:
         for inputs, labels in self.train_loader:
             # Move input and label tensors to the device
             inputs = inputs.to(self.device)
-            labels = labels.to(self.device)
+            labels = labels[:, 0].to(self.device).long()
     
             # Zero out the optimizer
             self.optimizer.zero_grad()
