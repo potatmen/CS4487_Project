@@ -9,15 +9,15 @@ import torchvision
 
 class Models(nn.Module):
     
-    def __init__(self, modelchoice, num_out_classes=2, dropout=0.5):
+    def __init__(self, modelchoice, pretrain = False, num_out_classes=2, dropout=0.5):
         super(Models, self).__init__()
         self.modelchoice = modelchoice
         
         if modelchoice == 'resnet50' or modelchoice == 'resnet18':
             if modelchoice == 'resnet50':
-                self.model = torchvision.models.resnet50(pretrained=True)
+                self.model = torchvision.models.resnet50(pretrained=pretrain)
             if modelchoice == 'resnet18':
-                self.model = torchvision.models.resnet18(pretrained=True)
+                self.model = torchvision.models.resnet18(pretrained=pretrain)
             # Replace fc
             num_ftrs = self.model.fc.in_features
             if not dropout:
@@ -29,7 +29,7 @@ class Models(nn.Module):
                 )
         elif modelchoice == 'vgg19_bn':
             weights = VGG19_BN_Weights.DEFAULT
-            self.model = torchvision.models.vgg19_bn(weights = weights)
+            self.model = torchvision.models.vgg19_bn(pretrained=pretrain)
         else:
             raise Exception('Choose valid model, e.g. resnet50')
 

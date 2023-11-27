@@ -36,7 +36,8 @@ class Dataset(Dataset):
         for label, paths in enumerate([fake_paths, real_paths]):
             for path in paths:
                 for image_path in path:
-                    data.append([image_path, label])        
+                    vectorized_data = self.__vectorize(image_path, label)
+                    data.append(vectorized_data)        
         self.data = sample(data, k=len(data))[:max_samples]
 
     def __getitem__(self, index):
